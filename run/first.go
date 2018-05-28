@@ -27,8 +27,10 @@ func First(jobs ...floc.Job) floc.Job {
       return nil
     }
 
+    newCtx := guard.NewDuplicateContext(ctx)
+
     mockCtx := guard.MockContext{
-      Context: ctx,
+      Context: newCtx,
       Mock:    floc.NewContext(),
     }
     defer mockCtx.Release()
@@ -46,15 +48,16 @@ func First(jobs ...floc.Job) floc.Job {
       }(job)
     }
 
+    // Wait until first jobs done
     <-ctx.Done()
 
-    // Wait until first jobs done
     res, data, err := mockCtrl.Result()
     switch res {
+    case floc.Completed:
+      mockCtrl.Cancel(nil)
+      // Continue current flow
     case floc.Canceled:
       ctrl.Cancel(data)
-    case floc.Completed:
-      // Continue current flow
     case floc.Failed:
       ctrl.Fail(data, err)
     }
