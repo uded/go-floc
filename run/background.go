@@ -2,6 +2,7 @@ package run
 
 import (
 	"gopkg.in/devishot/go-floc.v2"
+	"gopkg.in/devishot/go-floc.v2/guard"
 )
 
 /*
@@ -38,12 +39,23 @@ func Background(job floc.Job) floc.Job {
 			return nil
 		}
 
+		// Create new context
+		mockCtx := guard.MockContext{
+			Context: ctx,
+			Mock:    floc.NewContext(),
+		}
+		mockCtrl := floc.NewControl(mockCtx)
+
 		// Run the job in background
 		go func(job floc.Job) {
-			err := job(ctx, ctrl)
-			handleResult(ctrl, err)
+			defer mockCtx.Release()
+			defer mockCtrl.Release()
+
+			err := job(mockCtx, mockCtrl)
+			handleResult(mockCtrl, err)
 		}(job)
 
 		return nil
 	}
 }
+
