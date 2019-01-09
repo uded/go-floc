@@ -9,8 +9,8 @@ import (
 Background starts the job in it's own goroutine. The function does not
 track the lifecycle of the job started and does no synchronization with it
 therefore the job running in background may remain active even if the flow
-is finished. The function assumes the job is aware of the flow state and/or
-synchronization and termination of it is implemented outside.
+is finished. The function assumes the job is aware of synchronization and termination
+of it is implemented outside. The job can not change the flow state.
 
 	floc.Run(run.Background(
 		func(ctx floc.Context, ctrl floc.Control) error {
@@ -58,4 +58,3 @@ func Background(job floc.Job) floc.Job {
 		return nil
 	}
 }
-
