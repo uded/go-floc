@@ -18,7 +18,15 @@ func (ctx MockContext) Release() {
 	ctx.Mock.Release()
 }
 
-// If we prevent replacing the parent context, then it won't be canceled
+// Ctx return origin context from the mock context, not from the parent context.
+// Otherwise, Control from the mock context
+// will be canceled after the parent context.
+func (ctx MockContext) Ctx() context.Context {
+	return ctx.Mock.Ctx()
+}
+
+// Override UpdateCtx for prevent replacing the parent context.
+// Otherwise, it will cancel the parent context when the mock context cancels.
 func (ctx MockContext) UpdateCtx(newCtx context.Context) {
 	ctx.Mock.UpdateCtx(newCtx)
 }

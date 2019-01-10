@@ -28,11 +28,6 @@ func TestBackground_AlreadyFinished(t *testing.T) {
 }
 
 func TestBackground_ParentFlowFinished(t *testing.T) {
-	ctx := floc.NewContext()
-	defer ctx.Release()
-	ctrl := floc.NewControl(ctx)
-	defer ctrl.Release()
-
 	var wg sync.WaitGroup
 	wg.Add(1)
 
@@ -41,7 +36,6 @@ func TestBackground_ParentFlowFinished(t *testing.T) {
 			Delay(time.Millisecond,
 				Sequence(
 					func(ctx floc.Context, ctrl floc.Control) error {
-						t.Log("here")
 						wg.Done()
 						return nil
 					},
@@ -52,9 +46,9 @@ func TestBackground_ParentFlowFinished(t *testing.T) {
 		complete(nil),
 	)
 
-	result, _, _ := floc.RunWith(ctx, ctrl, flow)
-	if !result.IsCompleted() {
-		t.Fatalf("%s expects result to be Completed but has %s", t.Name(), result.String())
+	result, _, _ := floc.Run(flow)
+	if !result.IsFinished() {
+		t.Fatalf("%s expects result to be Finished but has %s", t.Name(), result.String())
 	}
 
 	wg.Wait()
@@ -63,7 +57,7 @@ func TestBackground_ParentFlowFinished(t *testing.T) {
 func TestBackground_Completed(t *testing.T) {
 	flow := Sequence(
 		Background(cancel(nil)),
-		Delay(time.Second, complete(nil)),
+		Delay(time.Millisecond, complete(nil)),
 	)
 	result, data, err := floc.Run(flow)
 	if !result.IsCompleted() {
@@ -78,7 +72,7 @@ func TestBackground_Completed(t *testing.T) {
 func TestBackground_Canceled(t *testing.T) {
 	flow := Sequence(
 		Background(complete(nil)),
-		Delay(time.Second, cancel(nil)),
+		Delay(time.Millisecond, cancel(nil)),
 	)
 	result, data, err := floc.Run(flow)
 	if !result.IsCanceled() {
@@ -93,7 +87,7 @@ func TestBackground_Canceled(t *testing.T) {
 func TestBackground_Failed(t *testing.T) {
 	flow := Sequence(
 		Background(cancel(nil)),
-		Delay(time.Second, fail(nil, fmt.Errorf("err"))),
+		Delay(time.Millisecond, fail(nil, fmt.Errorf("err"))),
 	)
 	result, data, err := floc.Run(flow)
 	if !result.IsFailed() {
@@ -108,7 +102,7 @@ func TestBackground_Failed(t *testing.T) {
 func TestBackground_Error(t *testing.T) {
 	flow := Sequence(
 		Background(cancel(nil)),
-		Delay(time.Second, throw(fmt.Errorf("err"))),
+		Delay(time.Millisecond, throw(fmt.Errorf("err"))),
 	)
 	result, data, err := floc.Run(flow)
 	if !result.IsFailed() {
