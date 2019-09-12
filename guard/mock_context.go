@@ -3,7 +3,7 @@ package guard
 import (
 	"context"
 
-	"gopkg.in/devishot/go-floc.v2"
+	"github.com/uded/go-floc"
 )
 
 // Mock context which propagates all calls to the parent context

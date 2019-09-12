@@ -1,8 +1,8 @@
 package run
 
 import (
-	"gopkg.in/devishot/go-floc.v2"
-	"gopkg.in/devishot/go-floc.v2/guard"
+	"github.com/uded/go-floc"
+	"github.com/uded/go-floc/guard"
 )
 
 /*

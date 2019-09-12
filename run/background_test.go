@@ -1,13 +1,12 @@
 package run
 
 import (
+	"fmt"
 	"sync"
 	"testing"
 	"time"
 
-	"fmt"
-
-	"gopkg.in/devishot/go-floc.v2"
+	"github.com/uded/go-floc"
 )
 
 func TestBackground_AlreadyFinished(t *testing.T) {

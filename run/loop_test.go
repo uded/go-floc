@@ -1,11 +1,10 @@
 package run
 
 import (
+	"fmt"
 	"testing"
 
-	"fmt"
-
-	"gopkg.in/devishot/go-floc.v2"
+	"github.com/uded/go-floc"
 )
 
 func TestLoop_AlreadyFinished(t *testing.T) {

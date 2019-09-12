@@ -4,9 +4,9 @@ import (
 	"testing"
 	"time"
 
-	"gopkg.in/devishot/go-floc.v2"
-	"gopkg.in/devishot/go-floc.v2/errors"
-	"gopkg.in/devishot/go-floc.v2/run"
+	"github.com/uded/go-floc"
+	"github.com/uded/go-floc/errors"
+	"github.com/uded/go-floc/run"
 )
 
 func TestTimeout(t *testing.T) {

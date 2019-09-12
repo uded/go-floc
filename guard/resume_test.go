@@ -1,12 +1,11 @@
 package guard
 
 import (
+	"fmt"
 	"testing"
 
-	"fmt"
-
-	"gopkg.in/devishot/go-floc.v2"
-	"gopkg.in/devishot/go-floc.v2/run"
+	"github.com/uded/go-floc"
+	"github.com/uded/go-floc/run"
 )
 
 func TestResume(t *testing.T) {

@@ -1,11 +1,10 @@
 package run
 
 import (
+	"fmt"
 	"testing"
 
-	"fmt"
-
-	"gopkg.in/devishot/go-floc.v2"
+	"github.com/uded/go-floc"
 )
 
 func TestIfNot_OneAlreadyFinished(t *testing.T) {

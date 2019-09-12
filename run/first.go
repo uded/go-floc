@@ -1,8 +1,8 @@
 package run
 
 import (
-  "gopkg.in/devishot/go-floc.v2"
-  "gopkg.in/devishot/go-floc.v2/guard"
+	"github.com/uded/go-floc"
+	"github.com/uded/go-floc/guard"
 )
 
 /*
@@ -21,47 +21,47 @@ Diagram:
     +-->[JOB_N]--+
 */
 func First(jobs ...floc.Job) floc.Job {
-  return func(ctx floc.Context, ctrl floc.Control) error {
-    // Do not start parallel jobs if the execution is finished
-    if ctrl.IsFinished() {
-      return nil
-    }
+	return func(ctx floc.Context, ctrl floc.Control) error {
+		// Do not start parallel jobs if the execution is finished
+		if ctrl.IsFinished() {
+			return nil
+		}
 
-    newCtx := guard.NewDuplicateContext(ctx)
+		newCtx := guard.NewDuplicateContext(ctx)
 
-    mockCtx := guard.MockContext{
-      Context: newCtx,
-      Mock:    floc.NewContext(),
-    }
-    defer mockCtx.Release()
+		mockCtx := guard.MockContext{
+			Context: newCtx,
+			Mock:    floc.NewContext(),
+		}
+		defer mockCtx.Release()
 
-    mockCtrl := floc.NewControl(mockCtx)
-    defer mockCtrl.Release()
+		mockCtrl := floc.NewControl(mockCtx)
+		defer mockCtrl.Release()
 
-    // Run jobs in parallel
-    for _, job := range jobs {
-      // Run the job in it's own goroutine
-      go func(job floc.Job) {
-        var err error
-        err = job(mockCtx, mockCtrl)
-        handleResult(mockCtrl, err)
-      }(job)
-    }
+		// Run jobs in parallel
+		for _, job := range jobs {
+			// Run the job in it's own goroutine
+			go func(job floc.Job) {
+				var err error
+				err = job(mockCtx, mockCtrl)
+				handleResult(mockCtrl, err)
+			}(job)
+		}
 
-    // Wait until first jobs done
-    <-newCtx.Done()
+		// Wait until first jobs done
+		<-newCtx.Done()
 
-    res, data, err := mockCtrl.Result()
-    switch res {
-    case floc.Completed:
-      mockCtrl.Cancel(nil)
-      // Continue current flow
-    case floc.Canceled:
-      ctrl.Cancel(data)
-    case floc.Failed:
-      ctrl.Fail(data, err)
-    }
+		res, data, err := mockCtrl.Result()
+		switch res {
+		case floc.Completed:
+			mockCtrl.Cancel(nil)
+			// Continue current flow
+		case floc.Canceled:
+			ctrl.Cancel(data)
+		case floc.Failed:
+			ctrl.Fail(data, err)
+		}
 
-    return nil
-  }
+		return nil
+	}
 }

@@ -1,12 +1,11 @@
 package run
 
 import (
+	"fmt"
 	"testing"
 	"time"
 
-	"fmt"
-
-	"gopkg.in/devishot/go-floc.v2"
+	"github.com/uded/go-floc"
 )
 
 func TestDelay_AlreadyFinished(t *testing.T) {

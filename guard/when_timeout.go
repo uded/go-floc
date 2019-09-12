@@ -3,7 +3,7 @@ package guard
 import (
 	"time"
 
-	"gopkg.in/devishot/go-floc.v2"
+	"github.com/uded/go-floc"
 )
 
 // WhenTimeoutFunc calculates the exact timeout passed in Timeout guards.

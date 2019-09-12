@@ -1,7 +1,7 @@
 package run
 
 import (
-	"gopkg.in/devishot/go-floc.v2"
+	"github.com/uded/go-floc"
 )
 
 /*

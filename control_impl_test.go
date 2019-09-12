@@ -10,8 +10,8 @@ var templateData = []struct {
 	test func(sample interface{}) bool
 }{
 	{nil, func(sample interface{}) bool { return sample == nil }},
-	{string("ABC"), func(sample interface{}) bool { s, ok := sample.(string); return ok && s == "ABC" }},
-	{int(123), func(sample interface{}) bool { d, ok := sample.(int); return ok && d == 123 }},
+	{"ABC", func(sample interface{}) bool { s, ok := sample.(string); return ok && s == "ABC" }},
+	{123, func(sample interface{}) bool { d, ok := sample.(int); return ok && d == 123 }},
 	{float64(3.1415), func(sample interface{}) bool { f, ok := sample.(float64); return ok && f >= 3.1415 && f <= 3.14151 }},
 }
 

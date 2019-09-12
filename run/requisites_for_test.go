@@ -3,7 +3,7 @@ package run
 import (
 	"time"
 
-	"gopkg.in/devishot/go-floc.v2"
+	"github.com/uded/go-floc"
 )
 
 func noop() floc.Job {

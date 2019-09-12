@@ -1,6 +1,6 @@
 package run
 
-import "gopkg.in/devishot/go-floc.v2"
+import "github.com/uded/go-floc"
 
 /*
 Else just returns the job unmodified. Else is used for expressiveness

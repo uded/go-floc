@@ -8,7 +8,7 @@ go:
   - 1.8
   - 1.9
 
-go_import_path: gopkg.in/workanator/go-floc.v2
+go_import_path: github.com/uded/go-floc
 
 install:
   - go get github.com/mattn/goveralls

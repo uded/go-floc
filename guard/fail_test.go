@@ -1,11 +1,10 @@
 package guard
 
 import (
+	"fmt"
 	"testing"
 
-	"fmt"
-
-	"gopkg.in/devishot/go-floc.v2"
+	"github.com/uded/go-floc"
 )
 
 func TestFail(t *testing.T) {

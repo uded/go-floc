@@ -1,7 +1,7 @@
 package guard
 
 import (
-	"gopkg.in/devishot/go-floc.v2"
+	"github.com/uded/go-floc"
 )
 
 // Resume resumes execution of the flow possibly finished by the job.

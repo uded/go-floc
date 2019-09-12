@@ -1,6 +1,6 @@
 package pred
 
-import "gopkg.in/devishot/go-floc.v2"
+import "github.com/uded/go-floc"
 
 func alwaysTrue(floc.Context) bool {
 	return true
